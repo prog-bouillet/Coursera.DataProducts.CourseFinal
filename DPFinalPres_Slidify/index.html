@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>A Signal-to-Noise Ratio (SNR) Visualization Utility</title>
+  <meta charset="utf-8">
+  <meta name="description" content="A Signal-to-Noise Ratio (SNR) Visualization Utility">
+  <meta name="author" content="">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/ribbons.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="libraries/frameworks/io2012/js/slides" 
+    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>A Signal-to-Noise Ratio (SNR) Visualization Utility</h1>
+    <h2></h2>
+    <p><br/></p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h2>Introduction</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li><p>This utility helps to get a sense of what a simple signal would look like at various signal-to-noise ratio (SNR) levels.</p></li>
+<li><p>SNR is defined as: \[SNR = 10*log10(\frac{Power Of Signal}{Power Of Noise})\], in decibels (dB)</p></li>
+<li><p>Typically, in communications settings, the noise being added is Gaussian distributed</p></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-2" style="background:;">
+  <hgroup>
+    <h2>Example Calculations</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>The power of the sine wave \(Asin(wt)\) is \(\frac{A^2}{2}\). To make things easy, just let \(A=1\), then we say the power in our signal is \(Ps = 0.5\).</p>
+
+<p>If we add noise with equal power to the signal, then the SNR is a low value : \(SNR=10*log10(\frac{0.5}{0.5}) = 0\).</p>
+
+<p>If we add noise with much lower power than the signal, then the SNR will be a high value : \(SNR=10*log10(\frac{0.5}{0.0005}) = 30\).</p>
+
+<table><thead>
+<tr>
+<th align="right">Ps.in.Watts</th>
+<th align="right">Pn.in.Watts</th>
+<th align="right">SNR.in.dB</th>
+</tr>
+</thead><tbody>
+<tr>
+<td align="right">0.5</td>
+<td align="right">5e+00</td>
+<td align="right">-10</td>
+</tr>
+<tr>
+<td align="right">0.5</td>
+<td align="right">5e-01</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="right">0.5</td>
+<td align="right">5e-02</td>
+<td align="right">10</td>
+</tr>
+<tr>
+<td align="right">0.5</td>
+<td align="right">5e-04</td>
+<td align="right">30</td>
+</tr>
+<tr>
+<td align="right">0.5</td>
+<td align="right">5e-05</td>
+<td align="right">40</td>
+</tr>
+</tbody></table>
+
+<p>But what does this actually <em>look</em> like?</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-3" style="background:;">
+  <hgroup>
+    <h2>Example Plot</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>A low SNR makes the sine wave obscured, a high SNR makes the signal look very clean:</p>
+
+<p><img src="assets/fig/unnamed-chunk-2-1.png" alt="plot of chunk unnamed-chunk-2"></p>
+
+<!-- A very low SNR makes the signal almost unrecognizable: -->
+
+<!-- ```{r, echo=FALSE} -->
+
+<!--    library(ggplot2) -->
+
+<!--    N <- 50 -->
+
+<!--    NT <- 2.5 -->
+
+<!--    pi <- 3.14159 -->
+
+<!--    snr <- -10 -->
+
+<!--    varn <- 10^(-snr/20)/sqrt(2) -->
+
+<!--    x    <- sin(2*pi*c(0:((N*NT)-1))/N) -->
+
+<!--    noisy_x <- x + varn*rnorm(N*NT) -->
+
+<!--    df <- data.frame(x=c(0:((N*NT)-1)), y=noisy_x) -->
+
+<!--    # draw the signal with the specified SNR -->
+
+<!--        ggplot(data=df, aes(x=x,y=y)) + geom_line() + geom_point() + theme_bw() + labs(title="SNR = -10", x="Sample Number", y="Voltage") + ylim(-6,6) -->
+
+<!-- ``` -->
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    <h2>Run the Utility!!</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>You can play around with visualizing different levels of SNR with the utility at <a href="https://prog-bouillet.shinyapps.io/Coursera-JHSPH-DataProducts-FInalProject">this site</a></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='Introduction'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='Example Calculations'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='Example Plot'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='Run the Utility!!'>
+         4
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- MathJax: Fall back to local if CDN offline but local image fonts are not supported (saves >100MB) -->
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        processEscapes: true
+      }
+    });
+  </script>
+  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <!-- <script src="https://c328740.ssl.cf1.rackcdn.com/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  </script> -->
+  <script>window.MathJax || document.write('<script type="text/x-mathjax-config">MathJax.Hub.Config({"HTML-CSS":{imageFont:null}});<\/script><script src="libraries/widgets/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"><\/script>')
+</script>
+<!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>

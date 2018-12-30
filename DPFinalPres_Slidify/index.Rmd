@@ -1,0 +1,90 @@
+---
+title       : A Signal-to-Noise Ratio (SNR) Visualization Utility
+subtitle    : 
+author      : 
+job         : 
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : [mathjax]            # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+knit        : slidify::knit2slides
+---
+
+## Introduction
+
+- This utility helps to get a sense of what a simple signal would look like at various signal-to-noise ratio (SNR) levels.
+
+- SNR is defined as: $$SNR = 10*log10(\frac{Power Of Signal}{Power Of Noise})$$, in decibels (dB)
+
+- Typically, in communications settings, the noise being added is Gaussian distributed
+
+---
+
+## Example Calculations
+
+The power of the sine wave $Asin(wt)$ is $\frac{A^2}{2}$. To make things easy, just let $A=1$, then we say the power in our signal is $Ps = 0.5$.
+
+If we add noise with equal power to the signal, then the SNR is a low value : $SNR=10*log10(\frac{0.5}{0.5}) = 0$.
+
+If we add noise with much lower power than the signal, then the SNR will be a high value : $SNR=10*log10(\frac{0.5}{0.0005}) = 30$.
+
+```{r, echo=FALSE}
+Pn <- c(5, 0.5, 0.05, 0.0005, 0.00005)
+Ps <- 0.5*rep(1,length(Pn))
+snr <- 10*log10(Ps/Pn)
+data <- data.frame(Ps.in.Watts=Ps, Pn.in.Watts=Pn, SNR.in.dB=snr)
+knitr::kable(data, caption = "Example SNR Values")
+```
+
+But what does this actually *look* like?
+
+---
+
+## Example Plot
+
+A low SNR makes the sine wave obscured, a high SNR makes the signal look very clean:
+
+```{r, echo=FALSE, fig.width=12}
+   library(ggplot2)
+
+   N <- 15
+   NT <- 10
+   pi <- 3.14159
+
+   snr <- 50
+   varn <- 10^(-snr/20)/sqrt(2)
+
+   x    <- sin(2*pi*c(0:((N*NT)-1))/N)
+   noisy_x <- x + varn*rnorm(N*NT)
+
+   df30 <- data.frame(SNR=30*rep(1,length(x)),x=c(0:((N*NT)-1)), y=noisy_x)
+
+   snr <- -6
+   varn <- 10^(-snr/20)/sqrt(2)
+
+   x    <- sin(2*pi*c(0:((N*NT)-1))/N)
+   noisy_x <- x + varn*rnorm(N*NT)
+
+   dfm10 <- data.frame(SNR=-6*rep(1,length(x)),x=c(0:((N*NT)-1)), y=noisy_x)
+                       
+   df <- rbind(dfm10,df30)
+
+   # draw the signal with the specified SNR
+   ggplot(data=df, aes(x=x,y=y)) + 
+      geom_point() +
+      geom_line() + 
+      theme_bw() + 
+      labs(title="Two Very Different SNR Values", x="Sample Number", y="Voltage") +
+      ylim(-6,6) +
+      facet_grid(cols=vars(SNR))
+
+```
+
+---
+
+## Run the Utility!!
+
+You can play around with visualizing different levels of SNR with the utility at [this site](https://prog-bouillet.shinyapps.io/Coursera-JHSPH-DataProducts-FInalProject)
+
+
