@@ -50,6 +50,7 @@
 <li><p>This utility helps to get a sense of what a simple signal would look like at various signal-to-noise ratio (SNR) levels.</p></li>
 <li><p>SNR is defined as: \[SNR = 10*log10(\frac{Power Of Signal}{Power Of Noise})\], in decibels (dB)</p></li>
 <li><p>Typically, in communications settings, the noise being added is Gaussian distributed</p></li>
+<li><p>The GIT repository with all source code can be found <a href="https://github.com/prog-bouillet/Coursera.DataProducts.CourseFinal.git">here</a></p></li>
 </ul>
 
   </article>
@@ -115,34 +116,6 @@
     <p>A low SNR makes the sine wave obscured, a high SNR makes the signal look very clean:</p>
 
 <p><img src="assets/fig/unnamed-chunk-2-1.png" alt="plot of chunk unnamed-chunk-2"></p>
-
-<!-- A very low SNR makes the signal almost unrecognizable: -->
-
-<!-- ```{r, echo=FALSE} -->
-
-<!--    library(ggplot2) -->
-
-<!--    N <- 50 -->
-
-<!--    NT <- 2.5 -->
-
-<!--    pi <- 3.14159 -->
-
-<!--    snr <- -10 -->
-
-<!--    varn <- 10^(-snr/20)/sqrt(2) -->
-
-<!--    x    <- sin(2*pi*c(0:((N*NT)-1))/N) -->
-
-<!--    noisy_x <- x + varn*rnorm(N*NT) -->
-
-<!--    df <- data.frame(x=c(0:((N*NT)-1)), y=noisy_x) -->
-
-<!--    # draw the signal with the specified SNR -->
-
-<!--        ggplot(data=df, aes(x=x,y=y)) + geom_line() + geom_point() + theme_bw() + labs(title="SNR = -10", x="Sample Number", y="Voltage") + ylim(-6,6) -->
-
-<!-- ``` -->
 
   </article>
   <!-- Presenter Notes -->
